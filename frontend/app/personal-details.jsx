@@ -19,9 +19,13 @@ export default function PersonalDetailsScreen() {
   const [fullName, setFullName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
 
+  const isFormValid =
+    fullName.trim().length >= 2 &&
+    phoneNumber.trim().replace(/\D/g, '').length === 10;
+
   const handleNext = () => {
-    // Next step in flow (user stated "then i will say next")
-    console.log('Submitted personal details:', { fullName, phoneNumber });
+    if (!isFormValid) return;
+    router.push('/service-location');
   };
 
   const handleLogin = () => {
@@ -98,12 +102,21 @@ export default function PersonalDetailsScreen() {
 
               {/* Next Button */}
               <TouchableOpacity
-                style={styles.nextButton}
+                style={[
+                  styles.nextButton,
+                  !isFormValid && styles.nextButtonDisabled,
+                ]}
                 onPress={handleNext}
+                disabled={!isFormValid}
                 activeOpacity={0.88}
               >
                 <Text style={styles.nextButtonText}>Next</Text>
-                <View style={styles.arrowCircle}>
+                <View
+                  style={[
+                    styles.arrowCircle,
+                    !isFormValid && styles.arrowCircleDisabled,
+                  ]}
+                >
                   <ArrowRightIcon size={18} color="#FFFFFF" strokeWidth={2.8} />
                 </View>
               </TouchableOpacity>
@@ -235,6 +248,11 @@ const styles = StyleSheet.create({
     marginTop: 8,
     position: 'relative',
   },
+  nextButtonDisabled: {
+    backgroundColor: '#FED7AA',
+    shadowOpacity: 0,
+    elevation: 0,
+  },
   nextButtonText: {
     color: '#FFFFFF',
     fontSize: 16,
@@ -249,6 +267,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.22)',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  arrowCircleDisabled: {
+    backgroundColor: 'rgba(255, 255, 255, 0.35)',
   },
   bottomSection: {
     width: '100%',
