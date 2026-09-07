@@ -176,15 +176,7 @@ export default function ServiceLocationScreen() {
   };
 
   const handleConfirmLocation = () => {
-    console.log('Confirmed location:', {
-      addressType,
-      flatNumber,
-      streetAddress,
-      cityRegion,
-      postalCode,
-      isDefault,
-      detectedCoords,
-    });
+    router.push('/home');
   };
 
   return (
@@ -212,15 +204,21 @@ export default function ServiceLocationScreen() {
           {/* Interactive Map Preview Card */}
           <View style={styles.mapCard}>
             {/* SVG stylized street grid */}
-            <Svg style={StyleSheet.absoluteFill} width="100%" height="100%">
+            <Svg
+              style={StyleSheet.absoluteFill}
+              width="100%"
+              height="100%"
+              viewBox="0 0 360 180"
+              preserveAspectRatio="none"
+            >
               {/* Grid Background */}
               {[...Array(9)].map((_, i) => (
                 <Line
                   key={`v-${i}`}
-                  x1={`${i * 12.5}%`}
-                  y1="0"
-                  x2={`${i * 12.5}%`}
-                  y2="100%"
+                  x1={i * 45}
+                  y1={0}
+                  x2={i * 45}
+                  y2={180}
                   stroke="#EEF2F6"
                   strokeWidth="1.2"
                 />
@@ -228,10 +226,10 @@ export default function ServiceLocationScreen() {
               {[...Array(6)].map((_, i) => (
                 <Line
                   key={`h-${i}`}
-                  x1="0"
-                  y1={`${i * 20}%`}
-                  x2="100%"
-                  y2={`${i * 20}%`}
+                  x1={0}
+                  y1={i * 36}
+                  x2={360}
+                  y2={i * 36}
                   stroke="#EEF2F6"
                   strokeWidth="1.2"
                 />
@@ -239,20 +237,20 @@ export default function ServiceLocationScreen() {
 
               {/* Main Street Roads */}
               <Line
-                x1="0"
-                y1="36%"
-                x2="100%"
-                y2="30%"
+                x1={0}
+                y1={65}
+                x2={360}
+                y2={54}
                 stroke="#FFFFFF"
-                strokeWidth="16"
+                strokeWidth={16}
               />
               <Line
-                x1="45%"
-                y1="0"
-                x2="35%"
-                y2="100%"
+                x1={162}
+                y1={0}
+                x2={126}
+                y2={180}
                 stroke="#FFFFFF"
-                strokeWidth="14"
+                strokeWidth={14}
               />
             </Svg>
 
